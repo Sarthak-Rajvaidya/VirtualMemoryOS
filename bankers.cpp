@@ -47,6 +47,61 @@ void displayNeed(int need[P][R]) {
 }
 
 
+bool isSafe(const int avail[R], int sequence[P]) {
+    int need[P][R];
+    calculateNeed(need);
+
+    int work[R];
+    bool finish[P] = {false};
+
+    // Copy available resources into work
+    for (int j = 0; j < R; j++) {
+        work[j] = avail[j];
+    }
+
+    int count = 0;
+
+    while (count < P) {
+        bool found = false;
+
+        for (int i = 0; i < P; i++) {
+            if (finish[i]) {
+                continue;
+            }
+
+            bool canFinish = true;
+
+            // Check whether this process can finish
+            for (int j = 0; j < R; j++) {
+                if (need[i][j] > work[j]) {
+                    canFinish = false;
+                    break;
+                }
+            }
+
+            if (canFinish) {
+                // Release its resources after completion
+                for (int j = 0; j < R; j++) {
+                    work[j] += allocation[i][j];
+                }
+
+                sequence[count++] = i;
+                finish[i] = true;
+                found = true;
+            }
+        }
+
+        // No unfinished process can proceed
+        if (!found) {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+
+
 int main() {
     cout << "BANKER'S ALGORITHM - DEADLOCK AVOIDANCE" << endl;
     cout << "Number of processes: " << P << endl;
