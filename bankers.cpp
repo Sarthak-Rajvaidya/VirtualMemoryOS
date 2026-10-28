@@ -57,6 +57,10 @@ int main() {
         cout << available[j] << " ";
     }
     cout << endl;
+    int need[P][R];
+
+    calculateNeed(need);
+    displayNeed(need);
 
     return 0;
 }
