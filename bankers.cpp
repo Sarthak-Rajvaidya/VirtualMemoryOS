@@ -101,6 +101,34 @@ bool isSafe(const int avail[R], int sequence[P]) {
 }
 
 
+void displayResult(const int avail[R]) {
+    int sequence[P];
+
+    cout << "\nAvailable: ";
+    for (int j = 0; j < R; j++) {
+        cout << avail[j] << " ";
+    }
+    cout << endl;
+
+    if (isSafe(avail, sequence)) {
+        cout << "System is in a SAFE state.\n";
+        cout << "Safe sequence: ";
+
+        for (int i = 0; i < P; i++) {
+            cout << "P" << sequence[i];
+
+            if (i < P - 1) {
+                cout << " -> ";
+            }
+        }
+        cout << endl;
+    } else {
+        cout << "System is in an UNSAFE state.\n";
+        cout << "No complete safe sequence exists.\n";
+    }
+}
+
+
 
 int main() {
     cout << "BANKER'S ALGORITHM - DEADLOCK AVOIDANCE" << endl;
