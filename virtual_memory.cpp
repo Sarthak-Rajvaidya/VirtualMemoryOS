@@ -105,6 +105,67 @@ void LRU(vector<int> pages, int capacity) {
     cout << "Total Page Hits: " << pageHits << endl;
 }
 
+void Optimal(vector<int> pages, int capacity) {
+    list<int> memory;
+    int pageFaults = 0;
+    int pageHits = 0;
+
+    for (int i = 0; i < pages.size(); i++) {
+        int page = pages[i];
+
+        auto it = find(memory.begin(), memory.end(), page);
+
+        if (it != memory.end()) {
+            pageHits++;
+            cout << "Page " << page << " -> Hit" << endl;
+        } else {
+            pageFaults++;
+
+            if (memory.size() == capacity) {
+                int victim = -1;
+                int farthest = -1;
+
+                for (int p : memory) {
+                    int nextUse = -1;
+
+                    for (int j = i + 1; j < pages.size(); j++) {
+                        if (pages[j] == p) {
+                            nextUse = j;
+                            break;
+                        }
+                    }
+
+                    // A page never used again is the best victim.
+                    if (nextUse == -1) {
+                        victim = p;
+                        break;
+                    }
+
+                    if (nextUse > farthest) {
+                        farthest = nextUse;
+                        victim = p;
+                    }
+                }
+
+                memory.remove(victim);
+            }
+
+            memory.push_back(page);
+            cout << "Page " << page << " -> Fault" << endl;
+        }
+
+        cout << "Frames: ";
+        for (int p : memory) {
+            cout << p << " ";
+        }
+        cout << endl;
+    }
+
+    cout << "\nTotal Page Faults: " << pageFaults << endl;
+    cout << "Total Page Hits: " << pageHits << endl;
+}
+
+
 
 int main() {
     int n, capacity;
