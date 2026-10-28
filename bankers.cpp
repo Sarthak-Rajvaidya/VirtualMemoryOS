@@ -144,6 +144,7 @@ int main() {
 
     calculateNeed(need);
     displayNeed(need);
+    displayResult(available);
 
     return 0;
 }
