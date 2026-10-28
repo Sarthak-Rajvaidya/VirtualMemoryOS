@@ -188,5 +188,8 @@ int main() {
 
     cout << "\n--- LRU Page Replacement ---\n";
     LRU(pages, capacity);
+
+    cout << "\n--- Optimal Page Replacement ---\n";
+    Optimal(pages, capacity);
     return 0;
 }
