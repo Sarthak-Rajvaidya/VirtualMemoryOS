@@ -66,6 +66,46 @@ void FIFO(vector<int> pages, int capacity) {
     cout << "Total Page Hits: " << pageHits << endl;
 }
 
+
+void LRU(vector<int> pages, int capacity) {
+    list<int> memory;
+    int pageFaults = 0;
+    int pageHits = 0;
+
+    for (int page : pages) {
+        auto it = find(memory.begin(), memory.end(), page);
+
+        if (it != memory.end()) {
+            // Page is already present: update its recent usage
+            pageHits++;
+            memory.erase(it);
+            memory.push_back(page);
+
+            cout << "Page " << page << " -> Hit" << endl;
+        } else {
+            // Page is absent: page fault occurs
+            pageFaults++;
+
+            if (memory.size() == capacity) {
+                memory.pop_front(); // Remove least recently used page
+            }
+
+            memory.push_back(page);
+            cout << "Page " << page << " -> Fault" << endl;
+        }
+
+        cout << "Frames (LRU -> MRU): ";
+        for (int p : memory) {
+            cout << p << " ";
+        }
+        cout << endl;
+    }
+
+    cout << "\nTotal Page Faults: " << pageFaults << endl;
+    cout << "Total Page Hits: " << pageHits << endl;
+}
+
+
 int main() {
     int n, capacity;
 
