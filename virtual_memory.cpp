@@ -125,5 +125,7 @@ int main() {
     cout << "\n--- FIFO Page Replacement ---\n";
     FIFO(pages, capacity);
 
+    cout << "\n--- LRU Page Replacement ---\n";
+    LRU(pages, capacity);
     return 0;
 }
